@@ -1,6 +1,7 @@
 #This .py file contains the code for the layout of the interface
 #import the tkinter module
 from tkinter import *
+from PIL import ImageTk, Image
 
 class Layout:
     #create the main window
@@ -17,13 +18,16 @@ class Layout:
     #left frame
     left_frame = LabelFrame(window, bg="#F5F5F5")
     left_frame.place(x=20, y=63, width=470, height=710)
-    app_title= Label(left_frame, text='Safe Trace', font=('Couture',40, 'bold'), bg="#F5F5F5", fg='red3').grid(
-    row=0, column=0, padx=50, pady=20)
-    #right frame
-    right_frame = LabelFrame(window,bg="#F5F5F5")
-    right_frame.place(x=500, y=63, width=1015, height=710)
+    
 
+    #right frame
+    right_frame_up = LabelFrame(window,text='Contact Information', font=('consolas', 15), fg= "black", bg="#F5F5F5")
+    right_frame_up.place(x=500, y=145, width=1015, height=275)
+    right_frame_down = LabelFrame(window,bg="#F5F5F5")
+    right_frame_down.place(x=500, y=430, width=1015, height=275)
     #create the header/title
+    app_title= Label(left_frame, text='Safe Trace', font=('Couture',35, 'bold'), bg="#F5F5F5", fg='red3').grid(
+    row=0, column=0, padx=75, pady=7)
     #create the labels
     #create the entry boxes where the user will input their entry
     #create the necessary buttons
