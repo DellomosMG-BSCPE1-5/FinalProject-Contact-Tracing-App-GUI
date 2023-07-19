@@ -17,7 +17,8 @@ class Layout:
     #left frame
     left_frame = LabelFrame(window, bg="#F5F5F5")
     left_frame.place(x=20, y=63, width=470, height=710)
-
+    app_title= Label(left_frame, text='Safe Trace', font=('Couture',40, 'bold'), bg="#F5F5F5", fg='red3').grid(
+    row=0, column=0, padx=50, pady=20)
     #right frame
     right_frame = LabelFrame(window,bg="#F5F5F5")
     right_frame.place(x=500, y=63, width=1015, height=710)
