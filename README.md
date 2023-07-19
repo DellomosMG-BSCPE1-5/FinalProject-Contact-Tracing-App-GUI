@@ -9,4 +9,5 @@
 * Be creative, the realistic the better.
 
 ## Planned Layout
-![OOP LAYOUT (1)](https://github.com/DellomosMG-BSCPE1-5/FinalProject-Contact-Tracing-App-GUI/assets/128887524/6a302226-4a42-4e6d-a6b3-2bf08dbcbfed)
+![OOP LAYOUT (1)](https://github.com/DellomosMG-BSCPE1-5/FinalProject-Contact-Tracing-App-GUI/assets/128887524/de01671e-6674-42b1-9bcb-8a16c15a7a3b)
+
