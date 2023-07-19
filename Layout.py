@@ -6,7 +6,7 @@ class Layout:
     #create the main window
     window = Tk()
     window.title("Safe Trace")
-    window.geometry("1420x700+50+50")
+    window.geometry("1920x1080")
     window.configure(bg="#F5F5F5")
 
     #create the frames
@@ -16,7 +16,11 @@ class Layout:
 
     #left frame
     left_frame = LabelFrame(window, bg="#F5F5F5")
-    left_frame (x=20, y=63, width=370, height=710)
+    left_frame.place(x=20, y=63, width=470, height=710)
+
+    #right frame
+    right_frame = LabelFrame(window,bg="#F5F5F5")
+    right_frame.place(x=500, y=63, width=1015, height=710)
 
     #create the header/title
     #create the labels
