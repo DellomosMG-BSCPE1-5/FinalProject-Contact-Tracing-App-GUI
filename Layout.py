@@ -33,19 +33,26 @@ class Layout:
 
     #create the labels
     first_name_label = Label(contact_info_frame, text="First Name", font=('consolas', 13), fg= "dark red", bg="#F5F5F5")
-    last_name_label = Label(contact_info_frame, text="Last Name", font=('consolas', 13), fg= "dark red", bg="#F5F5F5")
+    last_name_label = Label(contact_info_frame, text="\t    Last Name", font=('consolas', 13), fg= "dark red", bg="#F5F5F5")
     contact_num_label = Label(contact_info_frame, text="    Contact Number", font=('consolas', 13), fg= "dark red", bg="#F5F5F5")
+    email_address_label = Label(contact_info_frame, text="Email Address", font=('consolas', 13), fg= "dark red", bg="#F5F5F5")
+    
     first_name_label.grid(row=0, column=0, padx=55, pady=10)
-    last_name_label.grid(row=0, column=1, padx=308, pady=10)
+    last_name_label.grid(row=0, column=1, padx=0, pady=10)
     contact_num_label.grid(row=1, column=0, padx=25, pady=40)
+    email_address_label.grid(row=1, column=1, padx=235, pady=40)
 
     #create the entry boxes where the user will input their entry
     first_name_input = Entry(contact_info_frame, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
-    first_name_input.place(x=60, y=40, width=425, height=30)
     last_name_input = Entry(contact_info_frame, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2 )
+    contact_num_input = Entry(contact_info_frame, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
+    email_address_input = Entry(contact_info_frame, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
+    
+    first_name_input.place(x=60, y=40, width=425, height=30)
     last_name_input.place(x=525, y=40, width=425, height=30)
-    first_name_input = Entry(contact_info_frame, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
-    first_name_input.place(x=60, y=115, width=350, height=30)
+    contact_num_input.place(x=60, y=115, width=350, height=30)
+    email_address_input.place(x=450, y=115, width=500, height=30) 
+    
     #create the necessary buttons
 
     window.mainloop()
