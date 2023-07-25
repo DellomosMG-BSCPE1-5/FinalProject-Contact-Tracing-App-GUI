@@ -6,6 +6,7 @@ import openpyxl
 import xlrd
 from openpyxl import Workbook
 import pathlib
+import os
 
 #excel file
 data_file = pathlib.Path('Contact Tracing Data.xlsx')
@@ -23,9 +24,64 @@ else:
     active_sheet['G1'] = "Entry Date"
     active_sheet['H1'] = "Vaccine Received"
     active_sheet['I1'] = "COVID Symptoms"
-
     data_file.save('Contact Tracing Data.xlsx')
+
+#Save command for the submit button
+def save_the_entries():
+    #getting the contact information and additional data
+    first_name = first_name_input.get()
+    last_name = last_name_input.get()
+    contact_number = contact_num_input.get()
+    email_address = email_address_input.get()
+    residential_address = residential_address_input.get()
+    entry_date = entry_date_input.get()
+    entry_time = [entry_time_input.get()]
+    if entry_time_am_pm.get() == "A.M.":
+        entry_time.append("A.M.")
+    if entry_time_am_pm.get() == "P.M.":
+        entry_time.append("P.M.")
+    entry_time_str = " ".join(entry_time)
+    #saving the data into excel file
+    data_file=openpyxl.load_workbook('Contact Tracing Data.xlsx')
+    active_sheet = data_file.active
+    active_sheet.cell(column=1, row=active_sheet.max_row+1, value=first_name)
+    active_sheet.cell(column=2, row=active_sheet.max_row, value=last_name)
+    active_sheet.cell(column=3, row=active_sheet.max_row, value=contact_number)
+    active_sheet.cell(column=4, row=active_sheet.max_row, value=email_address)
+    active_sheet.cell(column=5, row=active_sheet.max_row, value=residential_address)
+    active_sheet.cell(column=6, row=active_sheet.max_row, value=entry_time_str)
+    active_sheet.cell(column=7, row=active_sheet.max_row, value=entry_date)    
+    #saving the value from radiobutton
+    if vaccines_received_var.get() == 1:
+        active_sheet.cell(column=8, row=active_sheet.max_row, value="None")
+    if vaccines_received_var.get() == 1:
+        active_sheet.cell(column=8, row=active_sheet.max_row, value="First Dose")
+    if vaccines_received_var.get() == 1:
+        active_sheet.cell(column=8, row=active_sheet.max_row, value="Second Dose")
+    if vaccines_received_var.get() == 1:
+        active_sheet.cell(column=8, row=active_sheet.max_row, value="First Booster Shot")
+    if vaccines_received_var.get() == 1:
+        active_sheet.cell(column=8, row=active_sheet.max_row, value="Second Booster Shot")    
+    #saving the values from checkbuttons
+    symptoms = []
+    if none_of_the_above_var.get() == 1:
+        symptoms.append("No")
+    if fever_var.get() == 1:
+        symptoms.append("Fever")
+    if cough_var.get() == 1:
+        symptoms.append("Cough")
+    if sore_throat_var.get() == 1:
+        symptoms.append("Sore Throat")
+    if lss_of_tst_smll_var.get() == 1:
+        symptoms.append("Loss of Taste and Smell")
+    if mscls_bdy_pains_var.get() == 1:
+        symptoms.append("Muscles and Body Pains")
+    symptoms_str = ", ".join(symptoms)
+    active_sheet.cell(column=9, row=active_sheet.max_row, value=symptoms_str)
     
+    data_file.save('Contact Tracing Data.xlsx')
+
+
 #create the main window
 window = Tk()
 window.title("Safe Trace")
@@ -99,19 +155,19 @@ entry_time_am_pm.place(x=423, y=14.3, width=50, height=30)
 entry_date_input.place(x=825, y=15, width=125, height=30)
 
 #Checkbox Symptoms
-none_of_the_above_var = StringVar()
-fever_var = StringVar() 
-cough_var = StringVar() 
-sore_throat_var = StringVar() 
-lss_of_tst_smll_var = StringVar()
-mscls_bdy_pains_var = StringVar()
+none_of_the_above_var = IntVar()
+fever_var = IntVar()
+cough_var = IntVar()
+sore_throat_var = IntVar()
+lss_of_tst_smll_var = IntVar()
+mscls_bdy_pains_var = IntVar()
 
-none_of_the_above = Checkbutton(covid_rltd_frame_2, text ='NO', takefocus = 0, bg="#F5F5F5", font=('consolas', 12))
-fever = Checkbutton(covid_rltd_frame_2, text ='Fever', takefocus = 0, bg="#F5F5F5", font=('consolas', 12))
-cough = Checkbutton(covid_rltd_frame_2, text ='Cough', takefocus = 0, bg="#F5F5F5", font=('consolas', 12))
-sore_throat = Checkbutton(covid_rltd_frame_2, text ='Headache', takefocus = 0, bg="#F5F5F5", font=('consolas', 12))
-lss_of_tst_smll = Checkbutton(covid_rltd_frame_2, text ='Difficulty of Breathing', takefocus = 0, bg="#F5F5F5", font=('consolas', 12))
-mscls_bdy_pains = Checkbutton(covid_rltd_frame_2, text ='Loss of Taste or Smell', takefocus = 0, bg="#F5F5F5", font=('consolas', 12))
+none_of_the_above = Checkbutton(covid_rltd_frame_2, text ='NO', variable = none_of_the_above_var, bg="#F5F5F5", font=('consolas', 12), onvalue=1, offvalue=0)
+fever = Checkbutton(covid_rltd_frame_2, text ='Fever', variable = fever_var, bg="#F5F5F5", font=('consolas', 12), onvalue=1, offvalue=0)
+cough = Checkbutton(covid_rltd_frame_2, text ='Cough', variable = cough_var, bg="#F5F5F5", font=('consolas', 12), onvalue=1, offvalue=0)
+sore_throat = Checkbutton(covid_rltd_frame_2, text ='Sore Throat', variable = sore_throat_var, bg="#F5F5F5", font=('consolas', 12), onvalue=1, offvalue=0)
+lss_of_tst_smll = Checkbutton(covid_rltd_frame_2, text ='Loss of Taste and Smell', variable = lss_of_tst_smll_var, bg="#F5F5F5", font=('consolas', 12), onvalue=1, offvalue=0)
+mscls_bdy_pains = Checkbutton(covid_rltd_frame_2, text ='Muscle and Body Pains', variable = mscls_bdy_pains_var, bg="#F5F5F5", font=('consolas', 12), onvalue=1, offvalue=0)
 
 none_of_the_above.pack(anchor="w", padx=21, pady=0)
 fever.pack(anchor="w", padx=21, pady=0)
@@ -121,13 +177,13 @@ lss_of_tst_smll.pack(anchor="w", padx=21, pady=0)
 mscls_bdy_pains.pack(anchor="w", padx=21, pady=0)
 
 #create the necessary buttons
-vaccines_received_var = StringVar(covid_rltd_frame_1, "0")
-vaccines_received_values = {"None" : "1", "First Dose" : "2", "Second Dose" : "3", "First Booster Shot" : "4", "Second Booster Shot" : "5",}
+vaccines_received_var = IntVar(covid_rltd_frame_1, "0")
+vaccines_received_values = {"None" : "1", "First Dose" : "2", "Second Dose" : "3", "First Booster Shot" : "4", "Second Booster Shot" : "5"}
 for (text, value) in vaccines_received_values.items():
     vaccines_received = Radiobutton(covid_rltd_frame_1, text = text, variable = vaccines_received_var, value = value, bg="#F5F5F5", font=('consolas', 12))
     vaccines_received.pack(anchor="w", padx=15, pady=0)
 
-submit_button = Button(window,text="SUBMIT", width="32", height="1", bg="red3", fg="white", font=("consolas", 24, "bold"), relief=GROOVE, bd=3)
+submit_button = Button(window,text="SUBMIT", width="32", height="1", bg="red3", fg="white", font=("consolas", 24, "bold"), relief=GROOVE, bd=3, command=save_the_entries)
 submit_button.place(x=1013, y=690, width=502, height=65)
 
 
