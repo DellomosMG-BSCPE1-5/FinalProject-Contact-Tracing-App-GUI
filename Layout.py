@@ -1,12 +1,11 @@
 #This .py file contains the code for the layout of the interface
 #import the tkinter module
+import pathlib
+import openpyxl
 from tkinter import *
 from tkinter import ttk
-import openpyxl
-import xlrd
+from tkinter import messagebox
 from openpyxl import Workbook
-import pathlib
-import os
 
 #excel file
 data_file = pathlib.Path('Contact Tracing Data.xlsx')
@@ -41,50 +40,57 @@ def save_the_entries():
     if entry_time_am_pm.get() == "P.M.":
         entry_time.append("P.M.")
     entry_time_str = " ".join(entry_time)
-    #saving the data into excel file
-    data_file=openpyxl.load_workbook('Contact Tracing Data.xlsx')
-    active_sheet = data_file.active
-    active_sheet.cell(column=1, row=active_sheet.max_row+1, value=first_name)
-    active_sheet.cell(column=2, row=active_sheet.max_row, value=last_name)
-    active_sheet.cell(column=3, row=active_sheet.max_row, value=contact_number)
-    active_sheet.cell(column=4, row=active_sheet.max_row, value=email_address)
-    active_sheet.cell(column=5, row=active_sheet.max_row, value=residential_address)
-    active_sheet.cell(column=6, row=active_sheet.max_row, value=entry_time_str)
-    active_sheet.cell(column=7, row=active_sheet.max_row, value=entry_date)    
-    #saving the value from radiobutton
-    if vaccines_received_var.get() == 1:
-        active_sheet.cell(column=8, row=active_sheet.max_row, value="None")
-    if vaccines_received_var.get() == 1:
-        active_sheet.cell(column=8, row=active_sheet.max_row, value="First Dose")
-    if vaccines_received_var.get() == 1:
-        active_sheet.cell(column=8, row=active_sheet.max_row, value="Second Dose")
-    if vaccines_received_var.get() == 1:
-        active_sheet.cell(column=8, row=active_sheet.max_row, value="First Booster Shot")
-    if vaccines_received_var.get() == 1:
-        active_sheet.cell(column=8, row=active_sheet.max_row, value="Second Booster Shot")    
-    #saving the values from checkbuttons
-    symptoms = []
-    if none_of_the_above_var.get() == 1:
-        symptoms.append("No")
-    if fever_var.get() == 1:
-        symptoms.append("Fever")
-    if cough_var.get() == 1:
-        symptoms.append("Cough")
-    if sore_throat_var.get() == 1:
-        symptoms.append("Sore Throat")
-    if lss_of_tst_smll_var.get() == 1:
-        symptoms.append("Loss of Taste and Smell")
-    if mscls_bdy_pains_var.get() == 1:
-        symptoms.append("Muscles and Body Pains")
-    symptoms_str = ", ".join(symptoms)
-    active_sheet.cell(column=9, row=active_sheet.max_row, value=symptoms_str)
-    
-    data_file.save('Contact Tracing Data.xlsx')
 
+    #input validation
+    if first_name == "" or last_name == "" or contact_number == "" or email_address == "" or residential_address == "" or entry_date == "" or entry_time == "":
+        messagebox.showwarning(title="WARNING!", message="All details must be filled.",)
+    else:
+        #saving the data into excel file
+        data_file=openpyxl.load_workbook('Contact Tracing Data.xlsx')
+        active_sheet = data_file.active
+        active_sheet.cell(column=1, row=active_sheet.max_row+1, value=first_name)
+        active_sheet.cell(column=2, row=active_sheet.max_row, value=last_name)
+        active_sheet.cell(column=3, row=active_sheet.max_row, value=contact_number)
+        active_sheet.cell(column=4, row=active_sheet.max_row, value=email_address)
+        active_sheet.cell(column=5, row=active_sheet.max_row, value=residential_address)
+        active_sheet.cell(column=6, row=active_sheet.max_row, value=entry_time_str)
+        active_sheet.cell(column=7, row=active_sheet.max_row, value=entry_date)    
+        #saving the value from radiobutton
+        if vaccines_received_var.get() == 1:
+            active_sheet.cell(column=8, row=active_sheet.max_row, value="None")
+        if vaccines_received_var.get() == 2:
+            active_sheet.cell(column=8, row=active_sheet.max_row, value="First Dose")
+        if vaccines_received_var.get() == 3:
+            active_sheet.cell(column=8, row=active_sheet.max_row, value="Second Dose")
+        if vaccines_received_var.get() == 4:
+            active_sheet.cell(column=8, row=active_sheet.max_row, value="First Booster Shot")
+        if vaccines_received_var.get() == 5:
+            active_sheet.cell(column=8, row=active_sheet.max_row, value="Second Booster Shot")    
+        #saving the values from checkbuttons
+        symptoms = []
+        if none_of_the_above_var.get() == 1:
+            symptoms.append("No")
+        if fever_var.get() == 1:
+            symptoms.append("Fever")
+        if cough_var.get() == 1:
+            symptoms.append("Cough")
+        if sore_throat_var.get() == 1:
+            symptoms.append("Sore Throat")
+        if lss_of_tst_smll_var.get() == 1:
+            symptoms.append("Loss of Taste and Smell")
+        if mscls_bdy_pains_var.get() == 1:
+            symptoms.append("Muscles and Body Pains")
+        symptoms_str = ", ".join(symptoms)
+        active_sheet.cell(column=9, row=active_sheet.max_row, value=symptoms_str)
+       
+        messagebox.showinfo(title="Information Submitted", message="Entries are Submitted Successfully",)
+        
+        data_file.save('Contact Tracing Data.xlsx')
 
 #create the main window
 window = Tk()
 window.title("Safe Trace")
+window.iconbitmap("C:\\Users\\Mary Grace\\Downloads\\safetrace.ico")
 window.geometry("1920x1200")
 window.configure(bg="#F5F5F5")
 
