@@ -6,6 +6,8 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from openpyxl import Workbook
+from datetime import datetime as dt
+from openpyxl import load_workbook
 
 #excel file
 data_file = pathlib.Path('Contact Tracing Data.xlsx')
@@ -82,15 +84,50 @@ def save_the_entries():
             symptoms.append("Muscles and Body Pains")
         symptoms_str = ", ".join(symptoms)
         active_sheet.cell(column=9, row=active_sheet.max_row, value=symptoms_str)
-       
-        messagebox.showinfo(title="Information Submitted", message="Entries are Submitted Successfully",)
-        
+               
         data_file.save('Contact Tracing Data.xlsx')
+
+        messagebox.showinfo(title="Information Submitted", message="Entries are Submitted Successfully")
+
+        #Clear the input fields after submission
+        first_name_input.delete(0, END)
+        last_name_input.delete(0, END)
+        contact_num_input.delete(0, END)
+        email_address_input.delete(0, END)
+        residential_address_input.delete(0, END)
+        entry_time_input.delete(0, END)
+        entry_date_input.delete(0, END)
+        none_of_the_above.deselect()
+        fever.deselect()
+        cough.deselect()
+        sore_throat.deselect()
+        lss_of_tst_smll.deselect()
+        mscls_bdy_pains.deselect()
+        vaccines_received_var.set(0)
+
+#searching the excel file    
+def search_records():
+    search_data = search.get()
+    data_file=openpyxl.load_workbook('Contact Tracing Data.xlsx')
+    active_sheet = data_file.active
+    found_records = []
+    for row in active_sheet.iter_rows(min_row=2, values_only=True):
+        if search_data.lower() in ' '.join(str(cell).lower() for cell in row):
+            found_records.append(row)
+
+    if found_records:
+        search_result = "\n\n".join("\n".join(f"{label}: {value}" for label, value in zip(["First Name", "Last Name", "Contact Number", "Email Address", 
+                                                                                           "Residential Address", "Entry Time", "Entry Date", 
+                                                                                           "Vaccine Received", "COVID Symptoms"], row)) for row in found_records)
+        messagebox.showinfo(title="Search Result", message=f"Found matching records:\n\n{search_result}")
+    else:
+        messagebox.showinfo(title="Search Result", message="No matching records found.") 
+
 
 #create the main window
 window = Tk()
 window.title("Safe Trace")
-window.iconbitmap("C:\\Users\\Mary Grace\\Downloads\\safetrace.ico")
+window.iconbitmap("C:\\Users\\Mary Grace\\Desktop\\Object-Oriented Programming\\FinalProject-Contact-Tracing-App-GUI\\FinalProject-Contact-Tracing-App-GUI\\safetrace.ico")
 window.geometry("1920x1200")
 window.configure(bg="#F5F5F5")
 
@@ -101,7 +138,7 @@ left_frame = LabelFrame(window, bg="#F5F5F5", borderwidth=0)     #left frame
 left_frame.place(x=20, y=60, width=470, height=730)
 app_title= Label(left_frame, text='Safe Trace', font=('Couture',35, 'bold'), bg="#F5F5F5", fg='red3')     #left frame: title
 app_title.grid(row=0, column=0, padx=75, pady=7)
-poster = PhotoImage(file = 'C:\\Users\\Mary Grace\\Downloads\\OOP POSTER.png')     #left frame: poster
+poster = PhotoImage(file = 'C:\\Users\\Mary Grace\\Desktop\\Object-Oriented Programming\\FinalProject-Contact-Tracing-App-GUI\\FinalProject-Contact-Tracing-App-GUI\\OOP POSTER.png')     #left frame: poster
 Label(left_frame, image = poster).place(x=5, y=73)
 
 #right frame
@@ -154,11 +191,14 @@ entry_date_label.grid(row=0, column=1, padx=125, pady=15)
 #right frame; Additional Information; ENTRY
 entry_time_input = Entry(addtl_info_frame, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
 entry_time_am_pm = ttk.Combobox(addtl_info_frame, values=["A.M.", "P.M."], font=("consolas", 11))
-entry_date_input = Entry(addtl_info_frame, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
-
 entry_time_input.place(x=350, y=15, width=70, height=30)
-entry_time_am_pm.place(x=423, y=14.3, width=50, height=30)  
+entry_time_am_pm.place(x=423, y=14.3, width=50, height=30)
+entry_date_var = StringVar()
+date_today = dt.now()
+entry_date = date_today.strftime("%d/%m/%Y")
+entry_date_input = Entry(addtl_info_frame, textvariable=entry_date_var, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
 entry_date_input.place(x=825, y=15, width=125, height=30)
+entry_date_var.set(entry_date)
 
 #Checkbox Symptoms
 none_of_the_above_var = IntVar()
@@ -189,7 +229,15 @@ for (text, value) in vaccines_received_values.items():
     vaccines_received = Radiobutton(covid_rltd_frame_1, text = text, variable = vaccines_received_var, value = value, bg="#F5F5F5", font=('consolas', 12))
     vaccines_received.pack(anchor="w", padx=15, pady=0)
 
-submit_button = Button(window,text="SUBMIT", width="32", height="1", bg="red3", fg="white", font=("consolas", 24, "bold"), relief=GROOVE, bd=3, command=save_the_entries)
+#search bar and search button
+search=StringVar()
+search_bar_input = Entry(window, textvariable=search, font=('consolas', 12), fg= "black", bg="#E6E4E4",relief=GROOVE, bd=2)
+search_bar_input.place(x=500, y=75, width=775, height=45)
+
+search_button = Button(window, text="Search", compound=LEFT, width=200, bg='red3', fg="white", font=('consolas', 24, 'bold'), relief=GROOVE, bd=3, command=search_records)
+search_button.place(x=1285, y=75, width=230, height=45)
+
+submit_button = Button(window,text="Submit", width="32", height="1", bg="red3", fg="white", font=("consolas", 20, "bold"), relief=GROOVE, bd=3, command=save_the_entries)
 submit_button.place(x=1013, y=690, width=502, height=65)
 
 
