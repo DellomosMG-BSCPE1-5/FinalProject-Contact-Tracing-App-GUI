@@ -9,25 +9,24 @@ from openpyxl import Workbook
 from datetime import datetime as dt
 
 #creation of excel file
-def data_file():
-    data_file = pathlib.Path('Contact Tracing Data.xlsx')
-    #checking if the data_file exists
-    if data_file.exists():
-        pass
-    #if the file already exist, append the following for header
-    else:
-        data_file = Workbook()
-        active_sheet = data_file.active
-        active_sheet['A1'] = "First Name"
-        active_sheet['B1'] = "Last Name"
-        active_sheet['C1'] = "Contact Number"
-        active_sheet['D1'] = "Email Address"
-        active_sheet['E1'] = "Residential Address"
-        active_sheet['F1'] = "Entry Time"
-        active_sheet['G1'] = "Entry Date"
-        active_sheet['H1'] = "Vaccine Received"
-        active_sheet['I1'] = "COVID Symptoms"
-        data_file.save('Contact Tracing Data.xlsx')
+data_file = pathlib.Path('Contact Tracing Data.xlsx')
+#checking if the data_file exists
+if data_file.exists():
+    pass
+#if the file already exist, append the following for header
+else:
+    data_file = Workbook()
+    active_sheet = data_file.active
+    active_sheet['A1'] = "First Name"
+    active_sheet['B1'] = "Last Name"
+    active_sheet['C1'] = "Contact Number"
+    active_sheet['D1'] = "Email Address"
+    active_sheet['E1'] = "Residential Address"
+    active_sheet['F1'] = "Entry Time"
+    active_sheet['G1'] = "Entry Date"
+    active_sheet['H1'] = "Vaccine Received"
+    active_sheet['I1'] = "COVID Symptoms"
+    data_file.save('Contact Tracing Data.xlsx')
 
 #save_the_entries method for the command of the submit button
 def save_the_entries():
