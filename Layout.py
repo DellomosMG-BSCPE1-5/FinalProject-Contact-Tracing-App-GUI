@@ -271,6 +271,4 @@ search_button.place(x=1285, y=75, width=230, height=45)
 submit_button = Button(window,text="Submit", width="32", height="1", bg="red3", fg="white", font=("consolas", 20, "bold"), relief=GROOVE, bd=3, command=save_the_entries)
 submit_button.place(x=1013, y=690, width=502, height=65)
 
-
-
 window.mainloop()
