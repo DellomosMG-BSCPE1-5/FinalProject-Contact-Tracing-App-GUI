@@ -8,7 +8,7 @@
 * The app should be able to add and search entry
 * Be creative, the realistic the better.
 
-### Planned Layout
+### Planned Frontend Layout
 ![OOP LAYOUT (1)](https://github.com/DellomosMG-BSCPE1-5/FinalProject-Contact-Tracing-App-GUI/assets/128887524/de01671e-6674-42b1-9bcb-8a16c15a7a3b)
 
 # Contact Tracing App GUI using Tkinter and Openpyxl 
