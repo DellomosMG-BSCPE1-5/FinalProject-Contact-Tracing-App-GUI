@@ -26,15 +26,15 @@ pip install openpyxl
 **Pathlib**
 
 ### About the App
-  The app allows users to input their first name, last name, contact number, email address, and residential address. Time and date of their arrival at the premises are also needed to enter. Using the radio buttons provided by tkinter, user can select their  COVID-19 vaccination status. Checkbuttons were used, on the other hand,  to select any COVID-19 symptoms that users have experienced. 
-  The app also has the search functionality that allows users to search for specific records in the Excel file based on keywords. The search results are displayed in a separate window.
+* The app allows users to input their first name, last name, contact number, email address, and residential address. Time and date of their arrival at the premises are also needed to enter. Using the radio buttons provided by tkinter, user can select their  COVID-19 vaccination status. Checkbuttons were used, on the other hand,  to select any COVID-19 symptoms that users have experienced. 
+* The app also has the search functionality that allows users to search for specific records in the Excel file based on keywords. The search results are displayed in a separate window.
 
 ## Important Note
-Ensure that the Excel file "Contact Tracing Data.xlsx" is not open in any other application while running the Contact Tracing App. Otherwise, it may cause conflicts when writing data to the file.
+* For better experience, kindly maximize the window.
+* Ensure that the Excel file "Contact Tracing Data.xlsx" is not open in any other application while running the Contact Tracing App. Otherwise, it may cause conflicts when writing data to the file.
+* Additionally, please make sure to respect privacy and data protection laws while using this app for contact tracing purposes.
 
-Additionally, please make sure to respect privacy and data protection laws while using this app for contact tracing purposes.
-
-##References
+## References
 * https://www.youtube.com/watch?v=YBuItStMpHc
 * https://www.youtube.com/watch?v=vusUfPBsggw&t=2943s
 * https://www.youtube.com/watch?v=9uckWrAw6I0&t=1047s
